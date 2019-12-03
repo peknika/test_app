@@ -1,0 +1,16 @@
+.table .thead .th {
+    border-bottom: none;
+    border-top: none;
+}
+.asc, .desc {
+    border-bottom: 4px solid #E8B504 !important;
+
+}
+.asc:after {
+    padding-left: 7px;
+     content: ' \25BC';
+}
+.desc:after {
+    padding-left: 7px;
+    content:  ' \25B2';
+}

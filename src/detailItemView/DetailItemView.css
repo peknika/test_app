@@ -1,0 +1,24 @@
+#img_wrap {
+    width: 30%;
+    margin-left: 20px;
+}
+
+img.itemImage {
+    width: 85%;
+    top: 15px;
+    bottom: 15px;
+    left: 40px;
+}
+#img_wrap {
+    position: relative;
+    float: left;
+}
+.row {
+    display: block;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    margin-right: 15px;
+}
+.modal-header {
+    background: #E8B504;
+}
