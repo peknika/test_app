@@ -6,6 +6,12 @@
     border-bottom: 4px solid #E8B504 !important;
 
 }
+.asc.icon {
+    content: none !important;
+}
+#icon-th::after {
+    content: none !important;
+}
 .asc:after {
     padding-left: 7px;
      content: ' \25BC';
@@ -14,3 +20,11 @@
     padding-left: 7px;
     content:  ' \25B2';
 }
+.icon-sm {
+    width: 20px;
+    margin-right: 5px;
+}
+.img-fluid.item {
+    height: 60px;
+}
+

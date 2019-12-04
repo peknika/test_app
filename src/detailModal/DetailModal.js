@@ -1,9 +1,10 @@
 import React from 'react';
 import cn from 'class-names';
 
-import './DetailItemView.css';
+import './DetailModal.css';
+import beerDefault from './beerDefault.png'
 
-const DetailedItemView = ({ item, isDetailed, dismissModal }) => (
+const DetailModal = ({ item, isDetailed, dismissModal }) => (
     <div
         role="document"
         className={cn({
@@ -15,7 +16,7 @@ const DetailedItemView = ({ item, isDetailed, dismissModal }) => (
         })}
         style={isDetailed ? {display: 'block'} : {display: 'none'}}
     >
-        <div className="modal-dialog" role="document">
+        <div className="modal-dialog modal-dialog-scrollable" role="document">
             <div className="modal-content">
                 <div className="modal-header">
                 <h4 className="modal-title w-100" id="myModalLabel">{item.name}</h4>
@@ -23,24 +24,22 @@ const DetailedItemView = ({ item, isDetailed, dismissModal }) => (
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div className="row">
+                <div className="modal-body">
                     <div id="img_wrap">
-                        <img alt="" src={item.image_url} className='itemImage'/>
+                        <img alt="" src={item.image_url ? item.image_url : beerDefault} className='itemImage'/>
                     </div>
-                    <div className="col-md-7 inline">
-                        <h6>ABV: {item.abv}</h6>
-                        <h6>EBC: {item.ebc}</h6>
-                        <h6>IBU: {item.ibu}</h6>
-                        <h6>PH: {item.ph}</h6>
-                        <p><b>Description</b>: {item.description}</p>
-                        <b>Tastes best with</b>:
-                        <ul>
-                            {item.food_pairing.map((i) => <li key={i}>{i}</li>)}
-                        </ul>
-                    </div>
+                    <p>ABV: {item.abv}</p>
+                    <p>EBC: {item.ebc}</p>
+                    <p>IBU: {item.ibu}</p>
+                    <p>PH: {item.ph}</p>
+                    <p><b>Description</b>: {item.description}</p>
+                    <b>Tastes best with</b>:
+                    <ul>
+                        {item.food_pairing.map((i) => <li key={i}>{i}</li>)}
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 );
-export default DetailedItemView;
+export default DetailModal;

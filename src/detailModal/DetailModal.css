@@ -22,3 +22,6 @@ img.itemImage {
 .modal-header {
     background: #E8B504;
 }
+.modal-body {
+    background-color: whitesmoke;
+}
