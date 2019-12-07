@@ -3,7 +3,7 @@
     border-top: none;
 }
 .asc, .desc {
-    border-bottom: 4px solid #E8B504 !important;
+    border-bottom: 4px solid #ffc107 !important;
 
 }
 .asc.icon {
@@ -21,10 +21,12 @@
     content:  ' \25B2';
 }
 .icon-sm {
-    width: 20px;
-    margin-right: 5px;
+    width: 30px;
+    margin-right: 2px;
 }
 .img-fluid.item {
     height: 60px;
 }
-
+.ul {
+    list-style-type:none;
+}

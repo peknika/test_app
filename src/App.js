@@ -5,6 +5,7 @@ import Loader from './loader/Loader';
 import Header from './header/Header';
 import Table from './table/Table';
 import DetailModal from './detailModal/DetailModal';
+import Pagination from './pagination/Pagination';
 
 class App extends React.Component {
     state = {
@@ -63,34 +64,46 @@ class App extends React.Component {
      })  ;
     };
 
-    onSearchSubmit = (e) => {
-        e.preventDefault();
-        this.fetchSearchData();
+    handle = (promise) => {
+        return promise
+            .then(data => ([data, undefined]))
+            .catch(error => Promise.resolve([undefined, error]));
     };
 
-    async fetchSearchData() {
-    const { searchInput,  sortField, sortType } = this.state;
-    const response = await fetch(`https://api.punkapi.com/v2/beers/?beer_name=${searchInput}`);
-    const data = await response.json();
-    const formatData = data.concat();
-    formatData.forEach((item) => item.first_brewed = item.first_brewed.match(/[^/]*$/));
-    this.setState({
-        data: _.orderBy(formatData, sortField, sortType)
-    });
-};
+    fetchData = async ( search = false ) => {
+        const { searchInput,  sortField, sortType, currentPage } = this.state;
+        let url = 'https://api.punkapi.com/v2/beers';
+        url = search && searchInput.length > 0 ? `${url}?beer_name=${searchInput}` : `${url}/?page=${currentPage}`;
+        const [ response, error ] = await this.handle(fetch(url));
+        if (error) {
+            console.log(error)
+        }
+        const data = await response.json();
+        const formatData = data.concat();
+        formatData.forEach((item) => item.first_brewed = item.first_brewed.match(/[^/]*$/));
+        this.setState({
+            data: _.orderBy(formatData, sortField, sortType)
+        });
+    };
 
     async componentDidMount() {
-    const response = await fetch('https://api.punkapi.com/v2/beers');
-    const data = await  response.json();
-    const formatData = data.concat();
-    formatData.forEach((item) => item.first_brewed = item.first_brewed.match(/[^/]*$/));
-    const { sortType, sortField } = this.state;
-
-    this.setState({
-        isLoading: false,
-        data: _.orderBy(formatData, sortField, sortType)
-    })
+        this.fetchData();
+        this.setState({
+            isLoading: false
+        })
   }
+
+    onSearchSubmit = (e) => {
+        e.preventDefault();
+        this.fetchData( true );
+    };
+
+    onPageChange = (newPage) => () => {
+        this.setState(
+            { currentPage: newPage },
+            () => this.fetchData()
+        );
+    };
 
   render() {
         const {
@@ -100,7 +113,9 @@ class App extends React.Component {
             sortField,
             isDetailed,
             itemDetailed,
-            searchInput
+            searchInput,
+            currentPage,
+            totalPages
         } = this.state;
 
         return (
@@ -127,6 +142,11 @@ class App extends React.Component {
                             />
                     }
                 </div>
+            <Pagination
+                currentPage={currentPage}
+                onPageChange={this.onPageChange}
+                totalPages={totalPages}
+            />
             </>
         );
   }

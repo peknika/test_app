@@ -20,7 +20,8 @@ img.itemImage {
     margin-right: 15px;
 }
 .modal-header {
-    background: #E8B504;
+    background: #ffc107;
+    border-color: #d39e00;
 }
 .modal-body {
     background-color: whitesmoke;
